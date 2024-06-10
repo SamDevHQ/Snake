@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 
 namespace Snake.Src
 {
@@ -18,6 +19,7 @@ namespace Snake.Src
         private double accumulatedTime;
         private double accumulatedRenderTime;
         public bool Running { get; set; }
+        public bool Rendering { get; set; }
 
         // Counters for update and render calls
         private int updateCount;
@@ -36,6 +38,7 @@ namespace Snake.Src
             stopwatch = new Stopwatch();
             accumulatedTime = 0.0;
             Running = true;
+            Rendering = true;
 
             // Start the game loop in a separate thread
             Thread gameThread = new Thread(Loop);
@@ -92,6 +95,8 @@ namespace Snake.Src
                 if (secondCounter >= 1000.0)
                 {
                     Debug.WriteLine($"Updates per second: {updateCount}, Renders per second: {renderCount}");
+                    Game.Renderer.fps = renderCount;
+                    Game.Renderer.updates = updateCount;
                     updateCount = 0;
                     renderCount = 0;
                     secondCounter = 0.0;
@@ -103,16 +108,18 @@ namespace Snake.Src
 
         private void Update(float deltaTime)
         {
-            // Push update to updator so it can do something with it.
             Game.Updater.Update(deltaTime);
             //Debug.WriteLine("Delta = " + deltaTime);
         }
 
         private void Render()
         {
-            if (Game.InnerFrame.InvokeRequired)
+            if(Rendering)
             {
-                Game.InnerFrame.Invoke(new MethodInvoker(Game.InnerFrame.Refresh));
+                if (Game.InnerFrame.InvokeRequired)
+                {
+                    Game.InnerFrame.Invoke(new MethodInvoker(Game.InnerFrame.Refresh));
+                }
             }
         }
     }

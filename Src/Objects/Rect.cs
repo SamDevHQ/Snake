@@ -10,19 +10,24 @@ using System.Windows.Forms;
 
 namespace Snake.Src.Objects
 {
-    public class Rect : GameObject
+    public class Rect
     {
         public int X { get; set; }
         public int Y { get; set; }
         public Direction Direction { get; set; }
         public float SpeedFactor { get; set; }
 
-
         public Rect(int x, int y)
         {
             this.X = x;
             this.Y = y;
             this.SpeedFactor = 5;
+            //bodies = new List<Body>();
+            //for(int i = 0; i < length; i++)
+            //{
+            //    Body body = new Body(3, 3);
+            //    bodies.Add(body);
+            //}
         }
 
         public override void Render(Graphics graphics)
@@ -36,44 +41,42 @@ namespace Snake.Src.Objects
         public override void Update(float deltatime)
         {
             stackedDelta += deltatime * SpeedFactor;
-            if (stackedDelta >= 1) 
+            if (stackedDelta >= 1)
             {
-                if(Direction == Direction.RIGHT) 
-                { 
-                    X += 1; 
-                    if (X >= Game.Renderer.GridRows)
-                    {
-                        Direction = Direction.LEFT;
-                    }
-                }
-                else if(Direction == Direction.LEFT)
+                switch (Direction)
                 {
-                    X-= 1;
-                    if (X <= 1)
-                    {
-                        Direction = Direction.RIGHT;
-                    }
+                    case Direction.UP:
+                        Y -= 1;
+                        if (Y <= 1)
+                        {
+                            Direction = Direction.DOWN;
+                        }
+                        break;
+                    case Direction.DOWN:
+                        Y += 1;
+                        if (Y >= Game.Renderer.GridColumns)
+                        {
+                            Direction = Direction.UP;
+                        }
+                        break;
+                    case Direction.LEFT:
+                        X -= 1;
+                        if (X <= 1)
+                        {
+                            Direction = Direction.RIGHT;
+                        }
+                        break;
+                    case Direction.RIGHT:
+                        X += 1;
+                        if (X >= Game.Renderer.GridRows)
+                        {
+                            Direction = Direction.LEFT;
+                        }
+                        break;
                 }
-                else if(Direction == Direction.DOWN)
-                {
-                    Y += 1;
-                    if (Y >= Game.Renderer.GridColumns)
-                    {
-                        Direction = Direction.UP; 
-                    }
-                }
-                else if(Direction == Direction.UP)
-                {
-                    Y -= 1;
-                    if(Y <= 1)
-                    {
-                        Direction = Direction.DOWN;
-                    }
-                }
-
                 stackedDelta = 0;
             }
-            
+
         }
     }
 }

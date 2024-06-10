@@ -26,6 +26,8 @@ namespace Snake.Src
         {
             Frame = form;
             Frame.Name = "Snake";
+            //Frame.FormBorderStyle = FormBorderStyle.None;
+            //Frame.WindowState = FormWindowState.Maximized;
             Renderer = new Renderer();
             ObjectManager = new ObjectManager();
             ObjectManager.Initialize();

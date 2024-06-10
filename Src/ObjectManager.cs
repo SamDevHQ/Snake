@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,10 @@ namespace Snake.Src
 {
     public class ObjectManager
     {
-        public Rect rect1 { get; set; }
-        private List<GameObject> List { get; set; }
-       
+        public List<GameObject> List { get; set; }
+        public SnakeTotal snake { get; set; }
+        public CollectibleObjects collectible { get; set; }
+
         public ObjectManager() 
         {
             List = new List<GameObject>();
@@ -30,8 +32,10 @@ namespace Snake.Src
 
         public void Initialize()
         {
-            rect1 = new Rect(4, 4);
-            this.AddObjects(rect1);
+            collectible = new CollectibleObjects();
+            snake = new SnakeTotal();
+            this.AddObjects(collectible);
+            this.AddObjects(snake);
         }
     }
 }

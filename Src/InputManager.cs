@@ -13,19 +13,31 @@ namespace Snake.Src
         {
             if (e.KeyCode == Keys.W)
             {
-                Game.ObjectManager.rect1.Direction = Enums.Direction.UP;
+                if(Game.ObjectManager.snake.snakeHead.Direction != Enums.Direction.DOWN)
+                {
+                    Game.ObjectManager.snake.snakeHead.Direction = Enums.Direction.UP;
+                }
             }
             if (e.KeyCode == Keys.A)
             {
-                Game.ObjectManager.rect1.Direction = Enums.Direction.LEFT;
+                if (Game.ObjectManager.snake.snakeHead.Direction != Enums.Direction.RIGHT)
+                {
+                    Game.ObjectManager.snake.snakeHead.Direction = Enums.Direction.LEFT;
+                }
             }
             if (e.KeyCode == Keys.S)
             {
-                Game.ObjectManager.rect1.Direction = Enums.Direction.DOWN;
+                if (Game.ObjectManager.snake.snakeHead.Direction != Enums.Direction.UP)
+                {
+                    Game.ObjectManager.snake.snakeHead.Direction = Enums.Direction.DOWN;
+                }
             }
             if (e.KeyCode == Keys.D)
             {
-                Game.ObjectManager.rect1.Direction = Enums.Direction.RIGHT;
+                if (Game.ObjectManager.snake.snakeHead.Direction != Enums.Direction.LEFT)
+                {
+                    Game.ObjectManager.snake.snakeHead.Direction = Enums.Direction.RIGHT;
+                }
             }
         }
     }
